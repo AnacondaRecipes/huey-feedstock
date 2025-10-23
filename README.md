@@ -9,7 +9,7 @@ Package license: MIT
 
 Summary: huey, a little task queue
 
-Documentation: https://huey.readthedocs.io
+Documentation: https://huey.readthedocs.io/
 
 Current build status
 ====================

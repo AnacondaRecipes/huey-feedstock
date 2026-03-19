@@ -35,6 +35,7 @@ test:
     - huey
   commands:
     - pip check
+    - huey_consumer --help
     #- redis-server --daemonize yes --port 6379
     #- sleep 5  # wait for Redis to be ready
     #- export HUEY_TRAVIS=1  # [unix]

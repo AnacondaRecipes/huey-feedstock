@@ -1,0 +1,61 @@
+{% set name = "huey" %}
+{% set version = "2.6.0" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/coleifer/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
+  sha256: 519bdc606781e1d5dfc20d8735c81fae08913e4c9f03f6b13a18f3899d996b69
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv --no-build-isolation --no-deps
+  python:
+    entry_points:
+      - huey_consumer = huey.bin.huey_consumer:consumer_main
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools
+    - wheel
+  run:
+    - python
+  run_constraints:
+    - redis-py >=3.0.0
+
+# Tests disabled, won`t run redis-server on CI. Works locally.
+test:
+  #source_files:
+  #  - runtests.py
+  imports:
+    - huey
+  commands:
+    - pip check
+    - huey_consumer --help  # [not win]
+    #- redis-server --daemonize yes --port 6379
+    #- sleep 5  # wait for Redis to be ready
+    #- export HUEY_TRAVIS=1  # [unix]
+    #- set HUEY_TRAVIS=1  # [win]
+    #- python runtests.py -v 2
+  requires:
+    - pip
+    #- pytest
+    #- gevent
+    #- peewee
+    #- redis-py >=3.0.0
+    #- redis-server
+
+about:
+  home: https://github.com/coleifer/huey
+  summary: huey, a little task queue
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  description: huey, a little task queue
+  dev_url: https://github.com/coleifer/huey
+  doc_url: https://huey.readthedocs.io
+
